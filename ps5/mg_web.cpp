@@ -1,4 +1,4 @@
-// PS5MG's web interface: a thin layer over the job queue in /data/PS5MG/jobs (the worker in mg_main.cpp runs the
+// PS5MG-Enhanced's web interface: a thin layer over the job queue in /data/PS5MG-Enhanced/jobs (the worker in mg_main.cpp runs the
 // jobs). The image goes to in/<id>.png, the job file gets the trellis-cli arguments, the result is out/<id>.glb.
 #include <dirent.h>
 #include <sys/stat.h>
@@ -146,7 +146,7 @@ std::string field(const httplib::Request & req, const char * name, const std::st
     return def;
 }
 
-// Weight folders: each folder of /data/PS5MG/models with the TRELLIS.2 set; pixal3d when its flows are there too.
+// Weight folders: each folder of /data/PS5MG-Enhanced/models with the TRELLIS.2 set; pixal3d when its flows are there too.
 std::string models_json() {
     std::string o = "[";
     for (const auto & d : list_dir(std::string(kMgDir) + "/models")) {
@@ -228,7 +228,7 @@ int clamp_int(const std::string & s, int lo, int hi, int def) {
     return std::max(lo, std::min(hi, atoi(s.c_str())));
 }
 
-// ---- access: an optional key in /data/PS5MG/api-key.txt (one line). No file, or an empty one: open, as before. ----
+// ---- access: an optional key in /data/PS5MG-Enhanced/api-key.txt (one line). No file, or an empty one: open, as before. ----
 std::string access_key() {
     std::string k = slurp(std::string(kMgDir) + "/api-key.txt");
     while (!k.empty() && (k.back() == '\n' || k.back() == '\r' || k.back() == ' ')) k.pop_back();

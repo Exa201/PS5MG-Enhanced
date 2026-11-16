@@ -1,6 +1,6 @@
-<p align="center"><img src="docs/images/logo.png" width="160" alt="PS5MG logo"></p>
+<p align="center"><img src="docs/images/logo.png" width="160" alt="PS5MG Enhanced logo"></p>
 
-# PS5MG - 3D Mesh Generation on PS5
+# PS5MG-Enhanced - 3D Mesh Generation on PS5
 
 <p align="center">
   <b>Your PS5 turns a picture into a textured 3D mesh, on its own GPU.</b><br>
@@ -8,15 +8,15 @@
 </p>
 
 <p align="center">
-  <b><a href="https://github.com/nikay99/PS5MG/releases/latest">Get the app</a></b> |
-  <a href="https://nikay99.github.io/PS5MG/">Gallery</a> |
+  <b><a href="https://github.com/Exa201/PS5MG-Enhanced/releases/latest">Get the app</a></b> |
+  <a href="https://github.com/nikay99/PS5MG">Upstream</a> |
   <a href="#quick-start">Quick start</a> |
   <a href="https://github.com/nikay99/PS5MG/issues">Issues</a>
 </p>
 
-> **Legal notice, short.** PS5MG contains no model weights and downloads nothing: the title has no network client, only a web
+> **Legal notice, short.** PS5MG-Enhanced contains no model weights and downloads nothing: the title has no network client, only a web
 > server for your own network. You fetch the weights yourself from their authors, after accepting their licences
-> (`tools/get-weights.sh` asks first). PS5MG is not affiliated with Sony, Microsoft or Meta, ships no exploit and asks for none.
+> (`tools/setup-weights.sh` asks first). PS5MG-Enhanced is not affiliated with Sony, Microsoft or Meta, ships no exploit and asks for none.
 > Details: [Licences, plainly](#licences-plainly) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 <p align="center">
@@ -27,9 +27,9 @@
 Drop a picture in the web interface and get a game-ready GLB (150k faces, 1024 px texture) in one to three minutes, made
 entirely on the console's own GPU.
 
-PS5MG is the third title in the line of [PS5LM](https://github.com/cobanov/PS5LM) (language models) and
-[PS5SD](https://github.com/Darkatek7/PS5SD) (Stable Diffusion): same toolchain, same screen, same install.
-Title id `PPSA99577`.
+PS5MG-Enhanced is a parallel-installable fork of [PS5MG](https://github.com/nikay99/PS5MG), the third title in the line of [PS5LM](https://github.com/cobanov/PS5LM) (language models) and
+[PS5SD](https://github.com/Darkatek7/PS5SD) (Stable Diffusion): same toolchain and screen, separate install.
+It uses title id `PPSA99578` and stores its data under `/data/PS5MG-Enhanced`, leaving PS5MG (`PPSA99577`, `/data/PS5MG`) intact.
 
 ## Who is it for
 
@@ -78,18 +78,16 @@ Title id `PPSA99577`.
 Linux) on the same network, and about 7 GB free on the console. Which exploit and firmware you need is outside this project, as with
 PS5SD and PS5LM.
 
-### 1. Install PS5MG
+### 1. Install PS5MG-Enhanced
 
-- **From the PS5 Homebrew Store** (ProsperoStore, [prosperostore.net](https://prosperostore.net)): search for PS5MG.
-- **Or by hand:** download `PPSA99577.zip` from the [latest release](https://github.com/nikay99/PS5MG/releases/latest), unzip it, copy the
-  folder `PPSA99577` to `/data/homebrew` on the console with any FTP client (port 2121), then rescan in ShadowMountPlus.
-  (Or build it yourself: [docs/BUILDING.md](docs/BUILDING.md).)
+- **Or by hand:** download `PPSA99578.zip` from the [latest Enhanced release](https://github.com/Exa201/PS5MG-Enhanced/releases/latest), unzip it, copy the
+  folder `PPSA99578` to `/data/homebrew` on the console with any FTP client (port 2121), then rescan in ShadowMountPlus.
+  The new title ID installs beside the original. (Or build it yourself: [docs/BUILDING.md](docs/BUILDING.md).)
 
 ### 2. Put the model files on the console (one command)
 
-PS5MG does not include the model files (about 6.5 GB). One command on your PC downloads them from their authors, checks them and copies
-them to the console. First get the PS5MG tools: **[Download ZIP](https://github.com/nikay99/PS5MG/archive/refs/heads/main.zip)** and unzip it
-(or `git clone` this repository). Then, in that folder, use your console's address in place of `192.168.1.50`:
+PS5MG-Enhanced does not include the model files (about 6.5 GB). One command on your PC downloads them from their authors, checks them and copies
+them to the console. Clone this repository to get the tools, then use your console's address in place of `192.168.1.50`:
 
 **Windows**: double-click `tools\setup-weights.bat` (it asks for the address), or in a terminal:
 
@@ -104,18 +102,18 @@ powershell -ExecutionPolicy Bypass -File .\tools\setup-weights.ps1 192.168.1.50
 ```
 
 It shows the licences of the models and asks you to type `yes`; then it downloads, checks every file and copies it to
-`/data/PS5MG/models/q4/` on the console. If it stops (Wi-Fi, sleep), run it again: it continues where it was and skips what is already there.
+`/data/PS5MG-Enhanced/models/q4/` on the console. If it stops (Wi-Fi, sleep), run it again: it continues where it was and skips what is already there.
 Options: `--no-birefnet` leaves out the 883 MB cut-out model (optional, a simple cut-out is used instead), `--pixal3d` adds the Pixal3D files,
 `--set q8` uses the larger q8 set. The PowerShell version takes `-NoBirefnet`, `-Pixal3d` and `-Set q8`.
 
 ### 3. Make your first mesh
 
-Start PS5MG from its icon, open `http://<console>:7870` in a browser, drop a picture. A textured mesh is ready in one to three minutes.
+Start PS5MG-Enhanced from its icon, open `http://<console>:7870` in a browser, drop a picture. A textured mesh is ready in one to three minutes.
 The page tells you if a model file is still missing, and which one.
 
 ### If something does not work
 
-- **The title is not on the home screen:** rescan in ShadowMountPlus, and check that `PPSA99577/` is directly inside `/data/homebrew`.
+- **The title is not on the home screen:** rescan in ShadowMountPlus, and check that `PPSA99578/` is directly inside `/data/homebrew`.
 - **The page does not open:** check that the title is running and that you use port 7870 and the console's address.
 - **The page says model files are missing:** run the command of step 2 again; "Check again" on the page updates the list.
 - **The command cannot reach the console:** is the FTP server on the console running, on port 2121, and is the address right?

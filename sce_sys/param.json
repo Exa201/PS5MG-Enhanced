@@ -12,10 +12,10 @@
   "attribute": 0,
   "attribute2": 0,
   "attribute3": 0,
-  "conceptId": "99577",
+  "conceptId": "99578",
   "contentBadgeType": 1,
-  "contentId": "UP9000-PPSA99577_00-PS5MGVULKAN00001",
-  "contentVersion": "01.000.007",
+  "contentId": "UP9000-PPSA99578_00-PS5MGENHANCED01",
+  "contentVersion": "01.000.001",
   "downloadDataSize": 256,
   "gameIntent": {
     "permittedIntents": [
@@ -31,7 +31,7 @@
   "localizedParameters": {
     "defaultLanguage": "en-US",
     "en-US": {
-      "titleName": "PS5MG"
+      "titleName": "PS5MG Enhanced"
     }
   },
   "masterVersion": "01.00",
@@ -42,6 +42,6 @@
   },
   "requiredSystemSoftwareVersion": "0x0000000000000000",
   "sdkVersion": "0x0000000000000000",
-  "titleId": "PPSA99577",
+  "titleId": "PPSA99578",
   "versionFileUri": ""
 }

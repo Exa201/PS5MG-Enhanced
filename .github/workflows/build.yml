@@ -32,6 +32,11 @@ jobs:
           git -C third_party/PS5SD submodule update --init third_party/ps5-homebrew-ui third_party/ftpsrv
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
+      - name: Record baseline and source revision
+        run: |
+          git rev-parse HEAD | tee baseline-commit.txt
+          git -C third_party/PS5SD rev-parse HEAD
+
       # RADV's build tree and the toolchain take several GiB.
       - name: Free disk space
         run: |
@@ -99,7 +104,7 @@ jobs:
           docker run --rm --platform linux/amd64 -v "$PWD":/work -w /work "$IMAGE" \
             bash -c 'git config --global --add safe.directory "*" && bash scripts/build-mg.sh'
 
-      # The launch payload for PPSA99577 (scripts/build-launcher.sh: PS5SD's script pins the title id to its own).
+      # The launch payload for PPSA99578 (scripts/build-launcher.sh: PS5SD's script pins the title id to its own).
       - name: Build the launch payload
         run: |
           docker run --rm --platform linux/amd64 -v "$PWD":/work -w /work "$IMAGE"             bash -c 'git config --global --add safe.directory "*" && bash scripts/build-launcher.sh'
@@ -110,13 +115,13 @@ jobs:
         run: |
           docker run --rm -v "$PWD":/work -w /work "$IMAGE" chown -R "$(id -u):$(id -g)" /work || true
 
-      # The title folder as a zip (PPSA99577/ at the top) with its checksum: what a release carries.
+      # The title folder as a zip (PPSA99578/ at the top) with its checksum: what a release carries.
       - name: Package
         run: |
           mkdir -p dist
-          (cd build/title && zip -qr9 ../../dist/PPSA99577.zip PPSA99577)
+          (cd build/title && zip -qr9 ../../dist/PPSA99578.zip PPSA99578)
           cp build/tools/launch-mg.elf dist/
-          (cd dist && sha256sum PPSA99577.zip launch-mg.elf | tee SHA256SUMS)
+          (cd dist && sha256sum PPSA99578.zip launch-mg.elf | tee SHA256SUMS)
 
       - name: Upload the title
         uses: actions/upload-artifact@v4
@@ -130,6 +135,16 @@ jobs:
         with:
           name: ps5mg-release
           path: dist
+          if-no-files-found: error
+
+      - name: Upload baseline record
+        uses: actions/upload-artifact@v4
+        with:
+          name: ps5mg-baseline-record
+          path: |
+            baseline-commit.txt
+            dist/SHA256SUMS
+            build/title/PPSA99578/SOURCE.txt
           if-no-files-found: error
 
       - name: Upload the launch payload
@@ -156,15 +171,15 @@ jobs:
         with:
           name: ps5mg-release
           path: dist
-      # Ties the zip to this workflow run and commit (check: gh attestation verify PPSA99577.zip --repo nikay99/PS5MG)
+      # Ties the zip to this workflow run and commit (check: gh attestation verify PPSA99578.zip --repo Exa201/PS5MG-Enhanced)
       - name: Attest the build
         uses: actions/attest-build-provenance@v4
         with:
-          subject-path: dist/PPSA99577.zip
+          subject-path: dist/PPSA99578.zip
 
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           # only the title zip: the PS5 homebrew catalog wants exactly one installable file per release
-          gh release create "$GITHUB_REF_NAME" dist/PPSA99577.zip --repo "$GITHUB_REPOSITORY" --title "PS5MG ${GITHUB_REF_NAME#v}"             --notes-file docs/RELEASE-NOTES.md
+          gh release create "$GITHUB_REF_NAME" dist/PPSA99578.zip --repo "$GITHUB_REPOSITORY" --title "PS5MG-Enhanced ${GITHUB_REF_NAME#v}"             --notes-file docs/RELEASE-NOTES.md

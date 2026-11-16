@@ -482,7 +482,7 @@ void Dashboard::sync_components(float dt) {
             break;
         case State::error:
             empty_.title = "Something went wrong";
-            empty_.body  = "The log below and /data/PS5MG/app.log say what.";
+            empty_.body  = "The log below and /data/PS5MG-Enhanced/app.log say what.";
             break;
         case State::stopped:
             if (!s.tv_images) {

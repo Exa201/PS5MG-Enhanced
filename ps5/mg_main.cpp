@@ -1,9 +1,9 @@
 // PS5MG spike: runs trellis.cpp's CLI as a headless PS5 title. Startup patterns are PS5SD's
 // (ps5/app/main.cpp, adapted from PS5LM, GPL-3.0): Vulkan forwarders, log to a file, quit file.
 //
-// /data/PS5MG/jobs/<name>.job  one line, the trellis-cli arguments; run in name order, then renamed .done or .failed
-// /data/PS5MG/app.log    everything the run prints
-// /data/PS5MG/quit       create it and the title exits itself
+// /data/PS5MG-Enhanced/jobs/<name>.job  one line, the trellis-cli arguments; run in name order, then renamed .done or .failed
+// /data/PS5MG-Enhanced/app.log    everything the run prints
+// /data/PS5MG-Enhanced/quit       create it and the title exits itself
 #include <dirent.h>
 #include <fcntl.h>
 #include <poll.h>
@@ -69,12 +69,12 @@ static std::chrono::steady_clock::time_point g_start = std::chrono::steady_clock
 double mg_now() { return std::chrono::duration<double>(std::chrono::steady_clock::now() - g_start).count(); }
 
 namespace {
-constexpr const char * kDir  = "/data/PS5MG";
-constexpr const char * kLog  = "/data/PS5MG/app.log";
-constexpr const char * kRaw  = "/data/PS5MG/app.raw";
-constexpr const char * kJobs = "/data/PS5MG/jobs";
-constexpr const char * kLogs = "/data/PS5MG/logs";
-constexpr const char * kQuit = "/data/PS5MG/quit";
+constexpr const char * kDir  = "/data/PS5MG-Enhanced";
+constexpr const char * kLog  = "/data/PS5MG-Enhanced/app.log";
+constexpr const char * kRaw  = "/data/PS5MG-Enhanced/app.raw";
+constexpr const char * kJobs = "/data/PS5MG-Enhanced/jobs";
+constexpr const char * kLogs = "/data/PS5MG-Enhanced/logs";
+constexpr const char * kQuit = "/data/PS5MG-Enhanced/quit";
 constexpr double       kGiB  = 1024.0 * 1024.0 * 1024.0;
 
 std::atomic<bool> g_done{false};
@@ -102,7 +102,7 @@ void write_log() {
         }
         for (const auto & [job, line] : batch) {
             if (out) std::fputs(line.c_str(), out);
-            // The running job's own log: /data/PS5MG/logs/<job>.log
+            // The running job's own log: /data/PS5MG-Enhanced/logs/<job>.log
             if (job != jobname) {
                 if (jobout) fclose(jobout);
                 jobname = job;
@@ -392,7 +392,7 @@ int run_job(const std::string & name, const std::string & line) {
     return rc;
 }
 
-// The first *.job in /data/PS5MG/jobs by name, or "".
+// The first *.job in /data/PS5MG-Enhanced/jobs by name, or "".
 std::string next_job() {
     std::vector<std::string> names;
     if (DIR * d = opendir(kJobs)) {
@@ -414,7 +414,7 @@ void * run(void *) {
         std::printf("ps5mg: device %zu: %s\n", i, ggml_backend_dev_name(ggml_backend_dev_get(i)));
     }
     mkdir(kJobs, 0777);
-    mkdir("/data/PS5MG/out", 0777);
+    mkdir("/data/PS5MG-Enhanced/out", 0777);
     // A job still marked running was in the title when it went away (a crash, the console): failed.
     if (DIR * d = opendir(kJobs)) {
         std::vector<std::string> left;

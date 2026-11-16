@@ -574,7 +574,7 @@ $('pickbtn').onclick=openPicker; $('pclose').onclick=()=>closeSheet(pick);
 
 // ---- the API, for this console: ready-made calls to copy
 const DOCS='https://github.com/nikay99/PS5MG/blob/main/docs/API.md';
-const PARAMS=['family   trellis | pixal3d','weights  a folder in /data/PS5MG/models (q4, q8)','res      512 | 1024','texture  on | off','seed     0 to 2147483647','steps    1 to 50  (6 fast, 8 balanced, 12 detailed)','faces    0 or 1000 to 2000000','atlas    512 | 1024 | 2048','uv       box | xatlas','label    a name for the job'].join(String.fromCharCode(10));
+const PARAMS=['family   trellis | pixal3d','weights  a folder in /data/PS5MG-Enhanced/models (q4, q8)','res      512 | 1024','texture  on | off','seed     0 to 2147483647','steps    1 to 50  (6 fast, 8 balanced, 12 detailed)','faces    0 or 1000 to 2000000','atlas    512 | 1024 | 2048','uv       box | xatlas','label    a name for the job'].join(String.fromCharCode(10));
 async function openApi(from){
   let auth={required:false};
   try{ auth=await (await fetch('/api/auth')).json(); }catch(_){}
@@ -589,7 +589,7 @@ async function openApi(from){
     ['Why did a job fail?',`curl${H} ${o}/api/jobs/JOB_ID/log`]];
   $('apibody').innerHTML=
     `<p>Everything this page does, a script can do. Base address: <b>${esc(o)}</b></p>`+
-    `<div class="keyinfo${auth.required?' on':''}">${auth.required?'This console is <b>protected</b>: send the key as <b>Authorization: Bearer</b> (the examples below do). The key is the line in <b>/data/PS5MG/api-key.txt</b>.':'This console is <b>open</b>: anyone on your network can use it. To protect it, run <b>tools/mg.sh setkey YOUR_KEY</b> from the repository.'}</div>`+
+    `<div class="keyinfo${auth.required?' on':''}">${auth.required?'This console is <b>protected</b>: send the key as <b>Authorization: Bearer</b> (the examples below do). The key is the line in <b>/data/PS5MG-Enhanced/api-key.txt</b>.':'This console is <b>open</b>: anyone on your network can use it. To protect it, run <b>tools/mg.sh setkey YOUR_KEY</b> from the repository.'}</div>`+
     calls.map(c=>`<h3>${esc(c[0])}</h3><div class="code"><span>${esc(c[1])}</span><button class="copy" type="button">Copy</button></div>`).join('')+
     `<h3>Settings (form fields of POST /api/jobs)</h3>`+
     `<div class="code"><span>${esc(PARAMS)}</span><button class="copy" type="button">Copy</button></div>`+

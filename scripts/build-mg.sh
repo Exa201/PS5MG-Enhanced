@@ -211,7 +211,7 @@ sdk_stubs=("$sdk"/target/lib/*.so)
     --stub "$out/stubs/libSceAgc.so" --stub "$out/stubs/libSceAgcDriver.so" \
     --module-sdk 0x02000009 --companion-sdk 0x08050001 --file-name eboot.elf
 
-app=$out/title/PPSA99577
+app=$out/title/PPSA99578
 rm -rf "$app"; mkdir -p "$app/sce_sys" "$app/sce_module"
 "$tool" self --sign --in "$out/eboot.elf" --out "$app/eboot.bin" --magic 0x1D3D154F
 cp "$W/sce_sys/param.json" "$app/sce_sys/param.json"
@@ -236,7 +236,7 @@ for d in "$T"/thirdparty/*/; do   # the licence files that ship with trellis.cpp
 done
 rev=$(git -C "$W" rev-parse HEAD 2> /dev/null || echo unknown)
 cat > "$app/SOURCE.txt" <<EOT
-PS5MG (title PPSA99577), built from https://github.com/nikay99/PS5MG at commit $rev
+PS5MG-Enhanced (title PPSA99578), built from https://github.com/Exa201/PS5MG-Enhanced at commit $rev
 trellis.cpp 8e4ce11a77d35c3e3a4b3f84a29d92bf5491e64e + ggml f8697b33795db2ee6a2569b40853ca6aaa69f9b9 (see scripts/build-mg.sh)
 No model weights are included: see the README (Licences) and tools/get-weights.sh.
 EOT
