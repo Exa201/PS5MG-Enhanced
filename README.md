@@ -228,13 +228,13 @@ revision). **Each name is a direct download link** if you prefer your browser:
 | [`tex_flow_1024.gguf`](https://huggingface.co/ilintar/trellis2-gguf/resolve/a57397bd3d351599d9729fc144b3f87c3f87d65b/q4/tex_flow_1024.gguf) | 731 MB | only for resolution 1024 |
 | [`tex_flow_512.gguf`](https://huggingface.co/ilintar/trellis2-gguf/resolve/a57397bd3d351599d9729fc144b3f87c3f87d65b/q4/tex_flow_512.gguf) | 731 MB | colours and material |
 
-Copy them with any FTP client to `/data/PS5MG/models/q4/` on the console. The exact revision and the SHA-256 of every file are in
+Copy them with any FTP client to `/data/PS5MG-Enhanced/models/q4/` on the console. The exact revision and the SHA-256 of every file are in
 [tools/weights.sha256](tools/weights.sha256).
 
 <details>
 <summary>More: the q8 set, Pixal3D, and the licences</summary>
 
-**q8** is the same set at higher precision (about twice as big), in the folder `q8` of the same page; copy it to `/data/PS5MG/models/q8/`.
+**q8** is the same set at higher precision (about twice as big), in the folder `q8` of the same page; copy it to `/data/PS5MG-Enhanced/models/q8/`.
 
 **Pixal3D** ([vegax87/Pixal3D](https://huggingface.co/vegax87/Pixal3D)) is an optional second model. Its five files go into the **same folder**
 as your TRELLIS set, because they share `dinov3.gguf`:
